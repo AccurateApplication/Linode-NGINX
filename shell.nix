@@ -2,7 +2,7 @@ with (import <nixpkgs> {});
 
 
 mkShell {
-  name = "TFT-shell";
+  name = "TF-Shell";
     buildInputs = [
           
             ];

@@ -1,3 +1,4 @@
 use_nix
-export TF_VAR_password=$(pass PW)
-export TF_VAR_API=$(pass API)
+export TF_VAR_ACCOUNT_PASSWORD=$(pass Password)
+export TF_VAR_ACCOUNT_USERNAME=$(pass Username)
+export TF_VAR_API_TOKEN=$(pass APIToken)

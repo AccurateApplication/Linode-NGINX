@@ -25,43 +25,20 @@ resource "local_file" "private_key" {
 }
 
 output "nanode_ip" {
-  value = linode_instance.LucasLinodeInstance.ip_address
+  value = linode_instance.Node.ip_address
 }
 
-#resource "Public_SSH_Key" "LucasLinodeInstance" {
-#  label   = "LucasLinodeInstance"
-#  ssh_key = chomp(file("~/.ssh/id_rsa.pub"))
-#}
 
 resource "tls_private_key" "ssh" {
   algorithm = "RSA"
   rsa_bits  = "4096"
 }
 
-resource "linode_instance" "LucasLinodeInstance" {
-  label           = "example_instance"
+
+resource "linode_instance" "Node" {
+  label           = "John_Lennon"
   region          = var.location
-  authorized_keys = [chomp(tls_private_key.ssh.public_key_openssh)]
+  authorized_keys = ["${chomp(file("~/.ssh/id_rsa.pub"))}"]
   image           = "linode/centos8"
   type            = "g6-standard-1"
-
-
-
-  # This is to ensure SSH daemon is running
-  provisioner "remote-exec" {
-    inline = ["echo 'Does SSH work yet?'"]
-
-    connection {
-      type = "ssh"
-      user = "root"
-      host = linode_instance.LucasLinodeInstance.ip_address
-      # private_key = var.ssh_key_path
-      # TODO: Fix this, doesnt work
-      private_key = "PrivateLinode.pem"
-    }
-  }
-
-  #provisioner "local-exec" {
-  #  command = "ansible-playbook -i ./Ansible/inventory.yaml --private-key ${var.ssh_key_path} ./Ansible/ping.yaml"
-  #}
 }

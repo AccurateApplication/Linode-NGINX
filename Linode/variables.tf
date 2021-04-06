@@ -33,5 +33,6 @@ variable "ssh_key" {
 
 variable "ssh_key_path" {
   description = "Path to SSH key that is used"
-  default     = "./PrivateLinode.pem"
+  default     = "PrivateLinode.pem"
 }
+

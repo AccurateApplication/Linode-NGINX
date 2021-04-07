@@ -1,0 +1,49 @@
+---
+
+- name: Install nginx
+  yum:
+    name: 
+      - firewalld
+      - nginx
+    state: present
+
+- name: Start and enable nginx systemd service
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Start and enable firewalld 
+  service:
+    name: firewalld
+    state: started
+    enabled: yes 
+
+- name: Enable firewalld https 
+  firewalld:
+    zone: public
+    service: https
+    permanent: yes
+    state: enabled
+
+- name: Enable firewalld http
+  firewalld:
+    zone: public
+    service: http
+    permanent: yes
+    state: enabled
+
+- name: Enable firewalld http
+  firewalld:
+    zone: public
+    permanent: yes
+    state: enabled
+    port: 80/tcp
+
+- name: Enable firewalld http
+  firewalld:
+    zone: public
+    permanent: yes
+    state: enabled
+    port: 443/tcp
+  notify: reload firewalld

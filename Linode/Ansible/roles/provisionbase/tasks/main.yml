@@ -6,6 +6,14 @@
     name: wheel
     state: present
 
+- name: upgrade all packages
+  yum: name=* state=latest
+
+- name: install bash completion
+  yum:
+    name: bash-completion
+    state: present
+
 - name: Allow 'wheel' group to have passwordless sudo
   lineinfile:
     dest: /etc/sudoers

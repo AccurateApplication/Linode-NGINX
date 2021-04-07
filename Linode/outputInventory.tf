@@ -5,5 +5,5 @@ resource "local_file" "AnsibleInventory" {
       server-ip = linode_instance.Node.ip_address
     }
   )
-  filename = "Ansible/inventory.yaml"
+  filename = "Ansible/inventory.yml"
 }

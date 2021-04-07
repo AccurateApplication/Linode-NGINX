@@ -1,0 +1,42 @@
+---
+# Adds admin user (sudoer), adds ~/.ssh/id_rsa.pub to authorized_key, disable root login, reloads sshd
+
+- name: Make sure we have a 'wheel' group
+  group:
+    name: wheel
+    state: present
+
+- name: Allow 'wheel' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+
+- name: Add admin user 
+  user:
+    name: admin
+    shell: /bin/bash
+    groups: wheel
+
+- name: Deploy SSH Key
+  authorized_key:
+    #user: " {{ lookup('env'), 'USER' }} "
+   user: admin
+   key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+   state: present
+   # key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+- name: Disable Password login
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^PasswordAuthentication"
+    line: "PasswordAuthentication no"
+
+- name: Disable root login
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^PermitRootLogin"
+    line: "PermitRootLogin no"
+  notify: restart ssh
+

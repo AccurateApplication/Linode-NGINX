@@ -6,9 +6,6 @@
     name: wheel
     state: present
 
-- name: upgrade all packages
-  yum: name=* state=latest
-
 - name: install bash completion
   yum:
     name: bash-completion
@@ -27,13 +24,17 @@
     shell: /bin/bash
     groups: wheel
 
+    #- name: Deploy SSH Key
+    #  ansible.posix.authorized_key:
+    #    name: admin
+    #    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+    #    state: present
+
 - name: Deploy SSH Key
   authorized_key:
-    #user: " {{ lookup('env'), 'USER' }} "
-   user: admin
-   key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
-   state: present
-   # key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    user: admin
+    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+    state: present
 
 - name: Disable Password login
   lineinfile:

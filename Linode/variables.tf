@@ -26,13 +26,9 @@ variable "location" {
   default     = "eu-central"
 }
 
-variable "ssh_key" {
-  description = "SSH-key that is generated"
-  default     = "PrivateLinode.pem"
-}
-
-variable "ssh_key_path" {
-  description = "Path to SSH key that is used"
-  default     = "PrivateLinode.pem"
-}
+#variable "USER_EMAIL" {
+#  default = ["${data.linode_profile.me.email}"]
+#  #type      = string
+#  sensitive = true
+#}
 

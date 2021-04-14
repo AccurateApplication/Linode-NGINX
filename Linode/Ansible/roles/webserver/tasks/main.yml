@@ -20,30 +20,57 @@
     enabled: yes 
 
 - name: Enable firewalld https 
-  firewalld:
+  #firewalld:
+  ansible.posix.firewalld:
     zone: public
     service: https
     permanent: yes
     state: enabled
 
 - name: Enable firewalld http
-  firewalld:
+  #firewalld:
+  ansible.posix.firewalld:
     zone: public
     service: http
     permanent: yes
     state: enabled
 
 - name: Enable firewalld http
-  firewalld:
+  #firewalld:
+  ansible.posix.firewalld:
     zone: public
     permanent: yes
     state: enabled
     port: 80/tcp
 
 - name: Enable firewalld http
-  firewalld:
+  #firewalld:
+  ansible.posix.firewalld:
     zone: public
     permanent: yes
     state: enabled
     port: 443/tcp
   notify: reload firewalld
+
+- name: Create default nginx www directory
+  file:
+    path: /data/www
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+    recurse: yes # Like mkdir -p
+    setype: httpd_sys_content_t
+
+- name: Move over nginx config file to remote
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    mode: preserve
+
+- name: Move index html to remote
+  copy:
+    src: index.html
+    dest: /data/www/index.html
+    mode: preserve
+  notify: restart nginx

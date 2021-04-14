@@ -2,7 +2,7 @@
 
 
 ### Secrets
-Store secrets in pass, loaded with direnv and variables.tf file.
+Store secrets in pass, loaded with .envrc and variables.tf file.
 
 ---
 

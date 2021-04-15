@@ -1,0 +1,15 @@
+import os
+# Variables to use. Static configuration and enviroment variables
+# Rename this to var_file.py when done.
+
+# Domain to configure/check
+Domain = 'example.org'
+#
+# API key for Cloudflare. In envrc
+CF_API_KEY = os.environ.get('CF_API_KEY')
+#
+# API key for linode. In envrc
+LINODE_API_KEY = os.environ.get('TF_VAR_API_TOKEN')
+#
+# Label set in variables.tf file (variable node_label).
+Node_label = "John_Lennon"

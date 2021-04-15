@@ -28,7 +28,7 @@ resource "linode_sshkey" "ssh_key" {
 }
 
 resource "linode_instance" "Node" {
-  label           = "John_Lennon"
+  label           = var.node_label
   region          = var.location
   authorized_keys = ["${linode_sshkey.ssh_key.ssh_key}"]
   image           = "linode/centos8"

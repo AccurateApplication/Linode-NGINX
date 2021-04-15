@@ -1,19 +1,13 @@
-variable "ACCOUNT_USERNAME" {
-  description = "Account username for Linode"
-  type        = string
-  sensitive   = true
-}
-
-variable "ACCOUNT_PASSWORD" {
-  description = "Account password for Linode"
-  type        = string
-  sensitive   = true
-}
-
 variable "API_TOKEN" {
   description = "Api token to do stuff "
   type        = string
   sensitive   = true
+}
+
+variable "node_label" {
+  description = "Will be name of node created. Will also be used in python script."
+  default     = "John_Lennon"
+  type        = string
 }
 
 variable "hostname" {

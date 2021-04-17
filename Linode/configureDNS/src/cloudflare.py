@@ -1,5 +1,4 @@
 import CloudFlare
-from datetime import datetime
 
 
 class Cloudflare_class:
@@ -10,7 +9,6 @@ class Cloudflare_class:
 
     def list_dns(self):
         cf = self.cf
-        #cf = CloudFlare.CloudFlare()
         zones = cf.zones.get(params={'per_page':50})
         try:
             zones = cf.zones.get(params = {'name':self.zone_name, 'per_page':1})
@@ -41,7 +39,6 @@ class Cloudflare_class:
 
     def add_dns_records(self):
         cf = self.cf
-        #print("Will add records for: [ %s ].\n" % self.zone_name)
         try: 
             zones = cf.zones.get(params = {'name':self.zone_name, 'per_page':1})
         except CloudFlare.CloudFlareAPIError as e:
@@ -50,15 +47,15 @@ class Cloudflare_class:
             exit('/zones.get %s - %s' % (self.zone_name, e))
         zone = zones[0]
         zone_id = zone['id']
-        now = datetime.now() # current date and time
-        name_entry = "Linode VM. Added: " + now.strftime("%Y/%m/%d, %H:%M")
         print(f"Will add {self.node_ipv4} to {self.zone_name} as A record.")
         # DNS records to add
         dns_records = [
-            {'name': "@", 'type':'A',    'content':self.node_ipv4}
+            {'name': "@", 'type':'A',    'content':self.node_ipv4},
+            {'name': "www."+self.zone_name,'type':'A',    'content':self.node_ipv4}
         ]
         # Loop through DNS records and add
         for dns_record in dns_records:
+            print(f"Adding:\t{dns_record}")
             try:
                 r = cf.zones.dns_records.post(zone_id, data=dns_record)
             except CloudFlare.exceptions.CloudFlareAPIError as e:

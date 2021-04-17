@@ -67,10 +67,12 @@
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
     mode: preserve
+    setype: httpd_config_t
 
 - name: Move index html to remote
   copy:
     src: index.html
     dest: /data/www/index.html
     mode: preserve
+    setype: httpd_sys_content_t
   notify: restart nginx

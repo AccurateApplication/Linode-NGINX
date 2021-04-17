@@ -18,7 +18,8 @@ class Linode_class:
             sys.exit("Resp status not ok: ", (resp.status_code))
         response_json = resp.json()
         if len(response_json['data']) == 0:
-            print(f" Data returned is 0.\n Probably bad response data from {url}\n Probably no node instances up.")
+            print(f" Linode data returned is 0.\n Probably bad response data from {url}\n Probably no node instances up.")
+            exit(1)
 
 
         return response_json

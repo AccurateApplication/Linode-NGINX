@@ -3,8 +3,10 @@ with (import <nixpkgs> {});
 
 mkShell {
   name = "TF-Shell";
-    buildInputs = [
-          
+    buildInputs =  with python3Packages; [
+      setuptools
+      cloudflare
+      requests
             ];
 
             }

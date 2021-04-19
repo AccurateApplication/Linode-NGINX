@@ -4,5 +4,5 @@ terraform.tfstate*
 .terraform
 todo.md
 .direnv
-var_file.py
+var.py
 *.pyc

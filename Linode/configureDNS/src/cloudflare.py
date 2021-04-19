@@ -21,6 +21,7 @@ class Cloudflare_class:
 
         # Get zone ID from zone_name
         zone = zones[0]
+        print("Got zone: ", zone['name'])
         zone_id = zone['id']
 
          #Get DNS records from zone ID

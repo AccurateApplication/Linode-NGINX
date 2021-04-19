@@ -1,26 +1,20 @@
 #!/usr/bin/env python
-import var_file as var
-from src.cloudflare import Cloudflare_class 
+import var
+from src.cloudflare import Cloudflare_class
 from src.linode import Linode_class
 
 def main():
 
-    linode = Linode_class(api_key=LINODE_API_KEY, node_label = node_label )
+    linode = Linode_class(api_key=var.LINODE_API_KEY, node_label=var.NODE_LABEL)
     json_data = linode.get_instances()
     node_response = linode.get_node(json_data)
     node_ipv4 = node_response['ipv4']
 
-    cf_class = Cloudflare_class(zone_name=domain, node_ipv4=node_ipv4[0])
+    cf_class = Cloudflare_class(zone_name=var.DOMAIN, node_ipv4=node_ipv4[0])
     cf_class.list_dns()
     cf_class.add_dns_records()
 
     exit(0)
-
-# Variables from var_file
-domain = var.domain
-CF_API_KEY = var.CF_API_KEY
-LINODE_API_KEY = var.LINODE_API_KEY
-node_label = var.Node_label
 
 if __name__ == '__main__':
     main()

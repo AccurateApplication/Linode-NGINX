@@ -1,0 +1,70 @@
+---
+
+# - name: install EPEL repo
+  # yum: name=epel-release state=present
+
+- name: Install certbot system dependencies
+  yum:
+    name:
+      - python3-devel
+      - python3
+      - python3-pip
+      - augeas-libs
+    state: present
+
+
+- name: Create certbot user
+  user:
+    name: certbot
+    groups: wheel
+
+- name: Create certbot venv directory
+  file:
+    path: /opt/app/certbot
+    state: directory
+    owner: certbot
+    group: certbot
+    mode: 0775
+    recurse: yes # mkdir -p
+
+- name: Move over requirements.txt file for pip venv
+  copy:
+    src: requirements.txt
+    dest: /opt/app/certbot/requirements.txt
+
+- name: pip self-update
+  pip:
+    name: pip
+    state: latest
+
+- name: pip install venv for system
+  # become_user: certbot
+  become: True
+  pip:
+    name: virtualenv
+    executable: pip3
+    state: latest
+
+- name: upgrade pip version for venv dir
+  become_user: certbot
+  pip:
+    name: pip
+    extra_args: --upgrade
+    virtualenv: /opt/app/certbot
+    virtualenv_command: 'python3 -m venv'
+
+- name: Setup python venv enviroment
+  become_user: certbot
+  pip:
+    requirements: /opt/app/certbot/requirements.txt
+    state: latest
+    virtualenv_python: python3
+    virtualenv: /opt/app/certbot
+    virtualenv_command: 'python3 -m venv'
+
+# - name: Install and configure certbot certificates
+  # become_user: certbot
+  # become: yes
+  # shell:
+    # cmd: opt /sudo/app/certbot/bin/certbot --non-interactive --agree-tos --nginx -m "{{ email }}" --domain
+    # TODO: fix domain

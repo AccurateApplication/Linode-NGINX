@@ -35,7 +35,7 @@
     permanent: yes
     state: enabled
 
-- name: Enable firewalld http
+- name: Enable firewalld 80/tcp
   #firewalld:
   ansible.posix.firewalld:
     zone: public
@@ -43,7 +43,7 @@
     state: enabled
     port: 80/tcp
 
-- name: Enable firewalld http
+- name: Enable firewalld 443/tcp
   #firewalld:
   ansible.posix.firewalld:
     zone: public

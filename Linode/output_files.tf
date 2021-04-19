@@ -21,5 +21,5 @@ resource "local_file" "AnsibleVariables" {
 
     }
   )
-  filename = "Ansible/vars/vars.yml"
+  filename = "Ansible/group_vars/all/vars.yml"
 }

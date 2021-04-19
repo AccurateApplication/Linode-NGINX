@@ -3,7 +3,7 @@ import os
 # Rename this to var_file.py when done.
 
 # Domain to configure/check
-Domain = 'example.org'
+DOMAIN = 'example.org'
 #
 # API key for Cloudflare. In envrc
 CF_API_KEY = os.environ.get('CF_API_KEY')
@@ -12,4 +12,4 @@ CF_API_KEY = os.environ.get('CF_API_KEY')
 LINODE_API_KEY = os.environ.get('TF_VAR_API_TOKEN')
 #
 # Label set in variables.tf file (variable node_label).
-Node_label = "John_Lennon"
+NODE_LABEL = "John_Lennon"

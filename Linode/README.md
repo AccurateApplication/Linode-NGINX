@@ -9,7 +9,7 @@
 ## Todo:
 - [x] Fix python script to add DNS records
 - [ ] Fix python script to remove DNS records when deleting node
-- [ ] Lets encrypt role
+- [x] Lets encrypt role
 - [ ] MySQL/PHP install
 
 ## Links

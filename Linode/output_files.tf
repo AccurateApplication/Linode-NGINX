@@ -14,10 +14,8 @@ resource "local_file" "AnsibleInventory" {
 resource "local_file" "AnsibleVariables" {
   content = templatefile("variables.tmpl",
     {
-      # email = var.USER_EMAIL
-      #email = linode_profile.email
-      #email = ["${data.linode_profile.me.email}"]
       email = data.linode_profile.me.email
+      domain = var.domain
 
     }
   )

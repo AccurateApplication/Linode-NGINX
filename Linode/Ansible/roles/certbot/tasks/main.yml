@@ -31,6 +31,7 @@
   copy:
     src: requirements.txt
     dest: /opt/app/certbot/requirements.txt
+    mode: '666'
 
 - name: pip self-update
   pip:
@@ -62,9 +63,8 @@
     virtualenv: /opt/app/certbot
     virtualenv_command: 'python3 -m venv'
 
-# - name: Install and configure certbot certificates
-  # become_user: certbot
-  # become: yes
-  # shell:
-    # cmd: opt /sudo/app/certbot/bin/certbot --non-interactive --agree-tos --nginx -m "{{ email }}" --domain
-    # TODO: fix domain
+- name: Install and configure certbot certificates
+  # become_user: root
+  become: True
+  shell:
+    cmd: /opt/app/certbot/bin/certbot --non-interactive --agree-tos --nginx -m "{{ email }}" --domain "{{ domain }}"

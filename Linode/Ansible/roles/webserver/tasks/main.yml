@@ -1,8 +1,14 @@
 ---
 
+# - name: Install nginx yum
+#   yum:
+#     name:
+#     - firewalld
+#     - nginx
+#   state: present
 - name: Install nginx
   yum:
-    name: 
+    name:
       - firewalld
       - nginx
     state: present
@@ -20,7 +26,6 @@
     enabled: yes 
 
 - name: Enable firewalld https 
-  #firewalld:
   ansible.posix.firewalld:
     zone: public
     service: https
@@ -28,7 +33,6 @@
     state: enabled
 
 - name: Enable firewalld http
-  #firewalld:
   ansible.posix.firewalld:
     zone: public
     service: http
@@ -36,7 +40,6 @@
     state: enabled
 
 - name: Enable firewalld 80/tcp
-  #firewalld:
   ansible.posix.firewalld:
     zone: public
     permanent: yes
@@ -44,7 +47,6 @@
     port: 80/tcp
 
 - name: Enable firewalld 443/tcp
-  #firewalld:
   ansible.posix.firewalld:
     zone: public
     permanent: yes
@@ -63,10 +65,9 @@
     setype: httpd_sys_content_t
 
 - name: Move over nginx config file to remote
-  copy:
-    src: nginx.conf
+  template:
+    src: nginx.conf.tmpl
     dest: /etc/nginx/nginx.conf
-    mode: preserve
     setype: httpd_config_t
 
 - name: Move index html to remote

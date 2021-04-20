@@ -33,4 +33,18 @@ resource "linode_instance" "Node" {
   authorized_keys = ["${linode_sshkey.ssh_key.ssh_key}"]
   image           = "linode/centos8"
   type            = "g6-standard-1"
+
+
+  connection {
+    type = "ssh"
+    user        = "root"
+    host = linode_instance.Node.ip_address
+    private_key = "${file("~/.ssh/id_rsa")}"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "echo ssh_up"
+    ]
+}
 }

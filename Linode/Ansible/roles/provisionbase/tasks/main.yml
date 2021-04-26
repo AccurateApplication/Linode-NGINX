@@ -11,6 +11,17 @@
     name: bash-completion
     state: present
 
+- name: Install chrony
+  yum:
+    name: chrony
+    state: present
+
+- name: Ensure chrony run
+  service:
+    name: chronyd
+    state: started
+    enabled: yes
+
 - name: Allow 'wheel' group to have passwordless sudo
   lineinfile:
     dest: /etc/sudoers
@@ -24,11 +35,6 @@
     shell: /bin/bash
     groups: wheel
 
-    #- name: Deploy SSH Key
-    #  ansible.posix.authorized_key:
-    #    name: admin
-    #    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
-    #    state: present
 
 - name: Deploy SSH Key
   authorized_key:

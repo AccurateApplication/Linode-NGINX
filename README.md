@@ -1,10 +1,35 @@
-## Terraform scripts etc
+## General
+* API keys stored with pass and using .envrc file.
+* Terraform creates VM and ansible vars/inventory, adds public ssh key (~/.ssh/id_rsa.pub) to authorized_keys on VM.
+* Ansible role provision provisions Linode node.
+* Ansible role webserver install nginx and opens necessary ports. Replaces default site with basic HTML site.
+* Python script in configureDNS adds linode instance IP to cloudflare. (type A record).
+* Certbot role install configures pip env and installs and runs certbot pip package to enable HTTPS with lets encrypt.
+
+## Variables to set
+* Domain in variables.tf file.
+* Linode node label in variables.tf file.
+* Domain in configureDNS/var.py(.example).
+* Linode node label in configureDNS/var.py(.example).
+* Cloudflare API key in .envrc file. Either using pass (preferred) or plain text.
+* Linode API key .envrc file. Either using pass (preferred) or plain text.
+
+Linode key needs read access to IP's, read/write to Linodes and read to account.
+Cloudflare key needs read access to your domain zone and edit DNS of the zone.
+
+I tried to have as little static variables that needs to be set as possible.
 
 
-### Secrets
-Store secrets in pass, loaded with .envrc and variables.tf file.
 
----
+## Todo:
+- [x] Fix python script to add DNS records
+- [x] Fix python script to remove DNS records when deleting node
+- [x] Lets encrypt role
+- [ ] MySQL/PHP install
 
-### Links
-[Docs Overview Terraform](https://registry.terraform.io/providers/linode/linode/latest/docs)
+## Links
+[Terraform Linode provider](https://registry.terraform.io/providers/linode/linode/latest)
+
+[Certbot pip](https://pypi.org/project/certbot/)
+
+[Python Cloudflare](https://github.com/cloudflare/python-cloudflare)

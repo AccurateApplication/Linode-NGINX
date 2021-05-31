@@ -1,10 +1,11 @@
-## General
-* API keys stored with pass and using .envrc file.
+## What it does
 * Terraform creates VM and ansible vars/inventory, adds public ssh key (~/.ssh/id_rsa.pub) to authorized_keys on VM.
 * Ansible role provision provisions Linode node.
 * Ansible role webserver install nginx and opens necessary ports. Replaces default site with basic HTML site.
+* Ansible role certbot install configures pip env and installs and runs certbot pip package to enable HTTPS with lets encrypt.
 * Python script in configureDNS adds linode instance IP to cloudflare. (type A record).
-* Certbot role install configures pip env and installs and runs certbot pip package to enable HTTPS with lets encrypt.
+* API keys stored with pass and using .envrc file (enviroment variables).
+
 
 ## Variables to set
 * Domain in variables.tf file.
@@ -21,11 +22,7 @@ I tried to have as little static variables that needs to be set as possible.
 
 
 
-## Todo:
-- [x] Fix python script to add DNS records
-- [x] Fix python script to remove DNS records when deleting node
-- [x] Lets encrypt role
-- [ ] MySQL/PHP install
+
 
 ## Links
 [Terraform Linode provider](https://registry.terraform.io/providers/linode/linode/latest)
